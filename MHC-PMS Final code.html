@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mental Health Care System</title>
+    <style>
+        /* Reset some default styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7fc;
+            color: #333;
+            padding: 30px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #1e90ff;
+            margin-bottom: 40px;
+            font-size: 2.5rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: #1e90ff;
+            margin-bottom: 20px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        input[type="file"],
+        select,
+        input[type="number"],
+        textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            margin-bottom: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="date"]:focus,
+        input[type="file"]:focus,
+        select:focus,
+        input[type="number"]:focus,
+        textarea:focus {
+            border-color: #1e90ff;
+            outline: none;
+        }
+
+        button {
+            background-color: #1e90ff;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #1c86ee;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .doctor-item {
+            cursor: pointer;
+            padding: 15px;
+            margin: 10px 0;
+            background-color: #e6f4ff;
+            border: 1px solid #1e90ff;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .doctor-item:hover {
+            background-color: #1e90ff;
+            color: white;
+        }
+
+        #thankYouMessage {
+            text-align: center;
+            font-size: 1.5rem;
+            color: green;
+            margin-top: 30px;
+        }
+
+        /* Mobile-friendly adjustments */
+        @media screen and (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+            button {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Mental Health Care System</h1>
+
+        <!-- Sign Up Section -->
+        <div id="signUpSection">
+            <div class="section-title">Sign Up</div>
+            <div class="form-group">
+                <label for="userName">Name:</label>
+                <input type="text" id="userName" placeholder="Enter your name">
+            </div>
+            <div class="form-group">
+                <label for="userEmail">Email:</label>
+                <input type="text" id="userEmail" placeholder="Enter your email">
+            </div>
+            <div class="form-group">
+                <label for="userPassword">Password:</label>
+                <input type="password" id="userPassword" placeholder="Enter a password">
+            </div>
+            <button onclick="signUp()">Sign Up</button>
+        </div>
+
+        <!-- Doctor Search Section -->
+        <div id="doctorSearchSection" class="hidden">
+            <div class="section-title">Search for Doctors</div>
+            <div class="doctor-list">
+                <ul id="doctorList">
+                    <li class="doctor-item" onclick="selectDoctor('Dr. Sarthak Jain - Psychiatrist')">Dr. Sarthak Jain - Psychiatrist</li>
+                    <li class="doctor-item" onclick="selectDoctor('Dr. Ritika Roy - Clinical Psychologist')">Dr. Ritika Roy - Clinical Psychologist</li>
+                    <li class="doctor-item" onclick="selectDoctor('Dr. Srestha Ghosh - Therapist')">Dr. Srestha Ghosh - Therapist</li>
+                    <li class="doctor-item" onclick="selectDoctor('Dr. Santanu Dutta - Mental Health Counselor')">Dr. Santanu Dutta - Mental Health Counselor</li>
+                    <li class="doctor-item" onclick="selectDoctor('Dr. Anisha Mondal - Therapist')">Dr. Anisha Mondal - Therapist</li>
+                </ul>
+            </div>
+            <button onclick="nextStep('appointmentSection')">Next</button>
+        </div>
+
+        <!-- Appointment Booking Section -->
+        <div id="appointmentSection" class="hidden">
+            <div class="section-title">Book an Appointment</div>
+            <div class="grid">
+                <div>
+                    <div class="form-group">
+                        <label for="appointmentDate">Select Date:</label>
+                        <input type="date" id="appointmentDate">
+                    </div>
+                    <div class="form-group">
+                        <label for="timeSlot">Select Time Slot:</label>
+                        <select id="timeSlot">
+                            <option value="morning">Morning (9:00 AM - 12:00 PM)</option>
+                            <option value="afternoon">Afternoon (1:00 PM - 4:00 PM)</option>
+                            <option value="evening">Evening (5:00 PM - 8:00 PM)</option>
+                        </select>
+                    </div>
+                    <button onclick="nextStep('paymentSection')">Next</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment Section -->
+        <div id="paymentSection" class="hidden">
+            <div class="section-title">Make Payment</div>
+            <div class="form-group">
+                <label for="paymentMethod">Select Payment Method:</label>
+                <select id="paymentMethod">
+                    <option value="card">Credit/Debit Card</option>
+                    <option value="upi">UPI</option>
+                    <option value="netbanking">Net Banking</option>
+                </select>
+            </div>
+            <button onclick="nextStep('prescriptionSection')">Next</button>
+        </div>
+
+        <!-- Prescription Upload Section -->
+        <div id="prescriptionSection" class="hidden">
+            <div class="section-title">Upload Prescription</div>
+            <div class="form-group">
+                <label for="uploadPrescription">Upload Prescription Image:</label>
+                <input type="file" id="uploadPrescription">
+            </div>
+            <button onclick="nextStep('feedbackSection')">Next</button>
+        </div>
+
+        <!-- Feedback Section -->
+        <div id="feedbackSection" class="hidden">
+            <div class="section-title">Give Feedback to Your Doctor</div>
+            <div class="form-group">
+                <label for="doctorSelect">Select Doctor:</label>
+                <select id="doctorSelect">
+                    <option value="">-- Choose a Doctor --</option>
+                    <option value="Dr. Sarthak Jain">Dr. Sarthak Jain - Psychiatrist</option>
+                    <option value="Dr. Ritika Roy">Dr. Ritika Roy - Clinical Psychologist</option>
+                    <option value="Dr. Srestha Ghosh">Dr. Srestha Ghosh - Therapist</option>
+                    <option value="Dr. Santanu Dutta">Dr. Santanu Dutta - Mental Health Counselor</option>
+                    <option value="Dr. Anisha Mondal">Dr. Anisha Mondal - Therapist</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="feedbackText">Your Feedback:</label>
+                <textarea id="feedbackText" placeholder="Write your feedback here..."></textarea>
+            </div>
+            <button onclick="nextStep('billSection')">Next</button>
+        </div>
+
+        <!-- Bill Generation Section -->
+        <div id="billSection" class="hidden">
+            <div class="section-title">Generate Bill</div>
+            <div class="form-group">
+                <label for="patientNameBill">Patient Name:</label>
+                <input type="text" id="patientNameBill" required>
+            </div>
+            <div class="form-group">
+                <label for="services">Services:</label>
+                <textarea id="services" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="amount">Amount (INR):</label>
+                <input type="number" id="amount" required>
+            </div>
+            <button type="button" onclick="generateBill()">Generate Bill</button>
+            <div id="billOutput" class="hidden">
+                <h2>Bill Details</h2>
+                <p><strong>Patient Name:</strong> <span id="outputName"></span></p>
+                <p><strong>Services:</strong> <span id="outputServices"></span></p>
+                <p><strong>Amount:</strong> ₹<span id="outputAmount"></span></p>
+            </div>
+        </div>
+
+        <!-- Thank You Section -->
+        <div id="thankYouMessage" class="hidden">
+            <p>Thank you for using our Mental Health Care services. We wish you good health!</p>
+        </div>
+    </div>
+
+    <script>
+        function nextStep(sectionId) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.container > div');
+            sections.forEach(section => {
+                section.classList.add('hidden');
+            });
+
+            // Show the selected section
+            document.getElementById(sectionId).classList.remove('hidden');
+        }
+
+        // Sign Up functionality
+        function signUp() {
+            const name = document.getElementById('userName').value;
+            const email = document.getElementById('userEmail').value;
+            const password = document.getElementById('userPassword').value;
+
+            if (!name || !email || !password) {
+                alert('Please fill in all fields.');
+                return;
+            }
+
+            alert('Sign up successful!');
+            nextStep('doctorSearchSection');
+        }
+
+        // Select a doctor directly on click
+        function selectDoctor(doctorName) {
+            // Store the selected doctor name
+            document.getElementById('doctorSelect').value = doctorName;
+            nextStep('appointmentSection');
+        }
+
+        // Generate Bill functionality
+        function generateBill() {
+            const name = document.getElementById('patientNameBill').value;
+            const services = document.getElementById('services').value;
+            const amount = document.getElementById('amount').value;
+
+            document.getElementById('outputName').innerText = name;
+            document.getElementById('outputServices').innerText = services;
+            document.getElementById('outputAmount').innerText = amount;
+
+            document.getElementById('billOutput').classList.remove('hidden');
+            nextStep('thankYouMessage');
+        }
+    </script>
+</body>
+
+</html>
